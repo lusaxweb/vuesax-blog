@@ -10,8 +10,6 @@
       @toggle-sidebar="toggleSidebar"
     />
 
-
-
     <div
       class="sidebar-mask"
       @click="toggleSidebar(false)"
@@ -31,21 +29,7 @@
       />
     </Sidebar>
 
-    <Carbon />
-
-    <Blog
-      v-if="$page.frontmatter.blog"
-      :sidebar-items="sidebarItems"
-    />
-
-    <div
-      class="custom-layout"
-      v-else-if="$page.frontmatter.layout"
-    >
-      <component :is="$page.frontmatter.layout"/>
-    </div>
-
-    <Home v-else-if="$page.frontmatter.home"/>
+    <Home v-if="$page.frontmatter.home"/>
 
     <Page
       v-else
@@ -60,44 +44,22 @@
         slot="bottom"
       />
     </Page>
-
-    <SWUpdatePopup :updateEvent="swUpdateEvent"/>
-
-    <Footerx />
-
-
   </div>
 </template>
 
 <script>
-import Vue from 'vue'
-import nprogress from 'nprogress'
-import Blog from './layout/Blog.vue'
-import Home from './layout/Home.vue'
-import Page from './layout/Page.vue'
-import Navbar from './components/Navbar.vue'
-import Sidebar from './components/Sidebar.vue'
-import Footerx from './components/Footerx.vue'
-import Carbon from './components/Carbon.vue'
-import SWUpdatePopup from './components/SWUpdatePopup.vue'
-import { resolveSidebarItems } from './util'
+import Home from '@theme/components/Home.vue'
+import Navbar from '@theme/components/Navbar.vue'
+import Page from '@theme/components/Page.vue'
+import Sidebar from '@theme/components/Sidebar.vue'
+import { resolveSidebarItems } from '../util'
 
 export default {
-  components: {
-    Blog,
-    Home,
-    Page,
-    Sidebar,
-    Navbar,
-    SWUpdatePopup,
-    Footerx,
-    Carbon
-  },
+  components: { Home, Page, Sidebar, Navbar },
 
   data () {
     return {
-      isSidebarOpen: false,
-      swUpdateEvent: null
+      isSidebarOpen: false
     }
   },
 
@@ -106,33 +68,32 @@ export default {
       const { themeConfig } = this.$site
       const { frontmatter } = this.$page
       if (
-        frontmatter.navbar === false ||
-        themeConfig.navbar === false) {
+        frontmatter.navbar === false
+        || themeConfig.navbar === false) {
         return false
       }
       return (
-        this.$title ||
-        themeConfig.logo ||
-        themeConfig.repo ||
-        themeConfig.nav ||
-        this.$themeLocaleConfig.nav
+        this.$title
+        || themeConfig.logo
+        || themeConfig.repo
+        || themeConfig.nav
+        || this.$themeLocaleConfig.nav
       )
     },
 
     shouldShowSidebar () {
       const { frontmatter } = this.$page
       return (
-        !frontmatter.layout &&
-        !frontmatter.home &&
-        frontmatter.sidebar !== false &&
-        this.sidebarItems.length
+        !frontmatter.home
+        && frontmatter.sidebar !== false
+        && this.sidebarItems.length
       )
     },
 
     sidebarItems () {
       return resolveSidebarItems(
         this.$page,
-        this.$route,
+        this.$page.regularPath,
         this.$site,
         this.$localePath
       )
@@ -155,24 +116,6 @@ export default {
     this.$router.afterEach(() => {
       this.isSidebarOpen = false
     })
-    // window.addEventListener('scroll', this.onScroll)
-
-    // // configure progress bar
-    // nprogress.configure({ showSpinner: false })
-
-    // this.$router.beforeEach((to, from, next) => {
-    //   if (to.path !== from.path && !Vue.component(to.name)) {
-    //     nprogress.start()
-    //   }
-    //   next()
-    // })
-
-    // this.$router.afterEach(() => {
-    //   nprogress.done()
-    //   this.isSidebarOpen = false
-    // })
-
-    // this.$on('sw-updated', this.onSWUpdated)
   },
 
   methods: {
@@ -198,14 +141,10 @@ export default {
           this.toggleSidebar(false)
         }
       }
-    },
-
-    onSWUpdated (e) {
-      this.swUpdateEvent = e
     }
   }
 }
 </script>
 
 <style src="prismjs/themes/prism-tomorrow.css"></style>
-<style src="./styles/theme.styl" lang="stylus"></style>
+<style src="../styles/theme.styl" lang="stylus"></style>
