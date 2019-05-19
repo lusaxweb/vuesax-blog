@@ -1,5 +1,7 @@
 <template>
   <div class="blog">
+
+
     <div class="blog__header">
       <div class="header-data">
 

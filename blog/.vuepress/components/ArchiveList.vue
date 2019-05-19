@@ -15,21 +15,22 @@ export default {
     computed: {
         filteredList() {
             if (this.pages) {
-                
+
                 return this.pages.filter(item => {
                     const isBlogPost = !!item.frontmatter.blog
+                    const isTipsPost = !!item.frontmatter.tips
                     const isReadyToPublish = new Date(item.frontmatter.date) <= new Date()
                     // check if tags contain any of the selected tags
                     // const hasTags = item.frontmatter.tags && item.frontmatter.tags.some(tag => this.selectedTags.includes(tag))
                     // check if tags contain all of the selected tags
                     const hasTags = !!item.frontmatter.tags && this.selectedTags.every((tag) => item.frontmatter.tags.includes(tag))
 
-                    if (!isBlogPost || !isReadyToPublish || (this.selectedTags.length > 0 && !hasTags)){ 
+                    if (!isTipsPost && !isBlogPost || !isReadyToPublish || (this.selectedTags.length > 0 && !hasTags)){
                         return false
                     }
 
                     return true
-                    
+
                 })
                 .sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date))
             }
@@ -54,7 +55,7 @@ export default {
     filters: {
        // Filter definitions
         monthToLongName(value) {
-            const months = [ "January", "February", "March", "April", "May", "June", 
+            const months = [ "January", "February", "March", "April", "May", "June",
            "July", "August", "September", "October", "November", "December" ];
 
            return months[value]
@@ -71,7 +72,17 @@ export default {
                 <div class="archive-month">{{month | monthToLongName}}</div>
                 <ul class="archive-list">
                     <li v-for="(item, index) in postsByDate(year, month)" class="archive-list__item">
-                        {{new Date(item.frontmatter.date).getDate()}} - <router-link :to="item.path">{{item.title}}</router-link>
+
+                        {{new Date(item.frontmatter.date).getDate()}} -
+                        <span v-if="item.frontmatter.tips">
+                          Tip:
+                        </span>
+                        <span v-else>
+                          Article:
+                        </span>
+                        <router-link :to="item.path">
+                          {{item.title}}
+                        </router-link>
                     </li>
                 </ul>
             </div>
@@ -100,6 +111,6 @@ export default {
 .archive-list__item {
 	list-style-type: none;
     margin: 0 0 16px 32px;
-    
+
 }
 </style>
