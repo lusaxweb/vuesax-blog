@@ -10,14 +10,21 @@
       @toggle-sidebar="toggleSidebar"
     />
 
-
+    <button
+      v-if="sidebarItems.length"
+      :class="{'btn-hidden': !open}"
+      @click="open = !open" class="open-side">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M296 136c0-22.002-17.998-40-40-40s-40 17.998-40 40 17.998 40 40 40 40-17.998 40-40zm0 240c0-22.002-17.998-40-40-40s-40 17.998-40 40 17.998 40 40 40 40-17.998 40-40zm0-120c0-22.002-17.998-40-40-40s-40 17.998-40 40 17.998 40 40 40 40-17.998 40-40z"></path></svg>
+    </button>
 
     <div
+
       class="sidebar-mask"
       @click="toggleSidebar(false)"
     ></div>
 
     <Sidebar
+      :open="open"
       :items="sidebarItems"
       @toggle-sidebar="toggleSidebar"
     >
@@ -34,7 +41,7 @@
     <Carbon />
 
     <Blog
-      v-if="$page.frontmatter.blog"
+      v-if="$page.frontmatter.blog || $page.frontmatter.tips"
       :sidebar-items="sidebarItems"
     />
 
@@ -97,7 +104,8 @@ export default {
   data () {
     return {
       isSidebarOpen: false,
-      swUpdateEvent: null
+      swUpdateEvent: null,
+      open: false
     }
   },
 
@@ -155,24 +163,24 @@ export default {
     this.$router.afterEach(() => {
       this.isSidebarOpen = false
     })
-    // window.addEventListener('scroll', this.onScroll)
+    window.addEventListener('scroll', this.onScroll)
 
-    // // configure progress bar
-    // nprogress.configure({ showSpinner: false })
+    // configure progress bar
+    nprogress.configure({ showSpinner: false })
 
-    // this.$router.beforeEach((to, from, next) => {
-    //   if (to.path !== from.path && !Vue.component(to.name)) {
-    //     nprogress.start()
-    //   }
-    //   next()
-    // })
+    this.$router.beforeEach((to, from, next) => {
+      if (to.path !== from.path && !Vue.component(to.name)) {
+        nprogress.start()
+      }
+      next()
+    })
 
-    // this.$router.afterEach(() => {
-    //   nprogress.done()
-    //   this.isSidebarOpen = false
-    // })
+    this.$router.afterEach(() => {
+      nprogress.done()
+      this.isSidebarOpen = false
+    })
 
-    // this.$on('sw-updated', this.onSWUpdated)
+    this.$on('sw-updated', this.onSWUpdated)
   },
 
   methods: {
@@ -209,3 +217,33 @@ export default {
 
 <style src="prismjs/themes/prism-tomorrow.css"></style>
 <style src="./styles/theme.styl" lang="stylus"></style>
+<style lang="stylus">
+.open-side
+  position fixed
+  top 0px
+  left 0px
+  z-index 3000
+  width 35px
+  height 35px
+  cursor pointer
+  outline none
+  background rgb(255,255,255)
+  border 1px solid $borderColor
+  top 50%
+  left 15rem
+  border-left 0px
+  border-radius 0px 4px 4px 0px
+  transition all .25s ease
+  &.btn-hidden
+    left 0px !important
+
+@media (max-width: $MQNarrow)
+  .open-side
+    left 12.299999999999999rem
+
+@media (max-width: $MQMobile)
+  .open-side
+    display none
+    left 12.299999999999999rem
+
+</style>

@@ -1,5 +1,6 @@
 <template>
-  <div class="sidebar">
+  <div :class="{'open': open}" class="sidebar">
+
     <NavLinks/>
     <slot name="top"/>
     <ul class="sidebar-links" v-if="items.length">
@@ -28,7 +29,7 @@ import { isActive } from '../util'
 export default {
   components: { SidebarGroup, SidebarLink, NavLinks },
 
-  props: ['items'],
+  props: ['items', 'open'],
 
   data () {
     return {
@@ -81,7 +82,13 @@ function resolveOpenGroupIndex (route, items) {
 <style lang="stylus">
 @import '../styles/config.styl'
 
+
+
 .sidebar
+  transform translate(-100%)
+  transition all .25s ease
+  &.open
+    transform translate(0) !important
   ul
     padding 0
     margin 0

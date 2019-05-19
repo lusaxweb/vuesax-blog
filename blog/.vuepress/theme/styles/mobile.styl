@@ -5,13 +5,16 @@ $mobileSidebarWidth = $sidebarWidth * 0.82
 // narrow desktop / iPad
 @media (max-width: $MQNarrow)
   .sidebar
-    font-size 15px
+    font-size 12px
     width $mobileSidebarWidth
   .page
     padding-left $mobileSidebarWidth
 
 // wide mobile
 @media (max-width: $MQMobile)
+  .nav-item
+    a
+      padding: 5px !important
   body
     font-size: 13px
   .blog__header

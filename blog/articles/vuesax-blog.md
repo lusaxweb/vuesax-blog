@@ -1,7 +1,9 @@
 ---
+sidebar: auto
 title: New Vuesax Blog
 date: 2019-5-18 23:21:00
 excerpt: Vuesax needed a blog to learn and deepen better about vuejs and all its ecosystem.
+autor: luisDanielRoviraContreras
 type: post
 blog: true
 tags:

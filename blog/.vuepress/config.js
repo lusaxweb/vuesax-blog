@@ -17,6 +17,7 @@ module.exports = {
 		nav: [
 			{ text: 'Home', link: '/' },
 			{ text: 'Articles', link: '/articles/' },
+			{ text: 'Tips', link: '/tips/' },
 			{ text: 'Archive', link: '/archive/' },
 		],
 		logo: '/vuesax-logo-vertical.png',

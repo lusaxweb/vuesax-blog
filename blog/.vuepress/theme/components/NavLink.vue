@@ -2,16 +2,16 @@
   <router-link
     class="nav-link"
     :to="link"
-    v-if="!isExternal(link) && !isXml(link)"
+    v-if="!isExternal(link)"
     :exact="exact"
   >{{ item.text }}</router-link>
-  <a 
+  <!-- <a
     v-else-if="isXml(link)"
     :href="link"
     class="nav-link"
   >
     {{ item.text }}
-  </a>
+  </a> -->
   <a
     v-else
     :href="link"
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { isExternal, isMailto, isTel, isXml, ensureExt } from '../util'
+import { isExternal, isMailto, isTel, ensureExt } from '../util'
 
 export default {
   props: {
@@ -51,7 +51,6 @@ export default {
     isExternal,
     isMailto,
     isTel,
-    isXml
   }
 }
 </script>

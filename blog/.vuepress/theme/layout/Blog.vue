@@ -1,9 +1,20 @@
 <template>
   <div class="blog">
     <div class="blog__header">
-      <p class="publish-date"><time :datetime="$frontmatter.date">{{ publishDate }}</time></p>
-      <p v-if="$page.readingTime">Time to read: {{ $page.readingTime.text }}</p>
+      <div class="header-data">
+
+        <p class="publish-date"><time :datetime="$frontmatter.date">{{ publishDate }}</time></p>
+        <p class="timex" v-if="$page.readingTime">Time to read: {{ $page.readingTime.text }}</p>
+      </div>
       <h1 class="blog__title">{{ $page.title }}</h1>
+      <div class="con-user-date">
+        <div v-if="autor" class="con-user">
+          <img  :src="autor.avatar_url" alt="">
+          by
+          <a target="_blank" :href="autor.html_url">{{ autor.name }}</a>
+        </div>
+        <!-- {{ this.autor.avatar_url }} -->
+        </div>
     </div>
 
     <Content class="custom" />
@@ -71,6 +82,20 @@ export default {
   name: 'Blog',
 
   props: ['sidebarItems'],
+
+  data:() => ({
+    autor: null
+  }),
+
+  mounted() {
+    console.log(this.$page.frontmatter.autor)
+    fetch(`https://api.github.com/users/${this.$page.frontmatter.autor}`)
+    .then(response => response.json())
+    .then(json => {
+      console.log(json)
+      this.autor = json
+    })
+  },
 
   computed: {
     lastUpdated () {
@@ -222,6 +247,17 @@ function find (page, items, offset) {
 @import '../styles/config.styl'
 @require '../styles/wrapper.styl'
 
+.con-user
+  display flex
+  align-items center
+  justify-content flex-start
+  img
+    margin-right 5px
+    width 35px
+    border-radius 10px
+  a
+    margin-left 5px
+
 .blog
   position relative
   width 100%
@@ -230,12 +266,21 @@ function find (page, items, offset) {
   @extend $wrapper
 }
 
-.blog__header {
-  padding-top: 4.6rem;
-}
+.blog__header
+  padding-top: 4.6rem
+  padding-bottom 1.5rem
+  .header-data
+    display flex
+    align-items center
+    justify-content space-between
+    padding-bottom 10px
+    .timex
+      font-size .8rem
+
 
 .blog__title {
   margin-top: 0;
+  margin-bottom 10px
 }
 
 .publish-date {

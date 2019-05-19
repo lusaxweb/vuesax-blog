@@ -30,12 +30,12 @@ export default {
             if (this.pages) {
 
                 return this.pages.filter(item => {
-                    const isBlogPost = !!item.frontmatter.blog
+                    const isTipsPost = !!item.frontmatter.tips
                     const isReadyToPublish = new Date(item.frontmatter.date) <= new Date()
                     // check if tags contain all of the selected tags
                     const hasTags = !!item.frontmatter.tags && this.selectedTags.every((tag) => item.frontmatter.tags.includes(tag))
 
-                    if (!isBlogPost || !isReadyToPublish || (this.selectedTags.length > 0 && !hasTags)){
+                    if (!isTipsPost || !isReadyToPublish || (this.selectedTags.length > 0 && !hasTags)){
                         return false
                     }
 
@@ -87,7 +87,7 @@ export default {
 
 <template>
 	<div>
-        <nav-tags :selected-tags="selectedTags" @click="addTag" @reset="resetTags"/>
+        <!-- <nav-tags :selected-tags="selectedTags" @click="addTag" @reset="resetTags"/> -->
         <div
             v-if="selectedTags.length > 0"
             class="filtered-heading"
