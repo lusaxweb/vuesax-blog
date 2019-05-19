@@ -19,6 +19,7 @@ module.exports = {
 			{ text: 'Articles', link: '/articles/' },
 			{ text: 'Tips', link: '/tips/' },
 			{ text: 'Archive', link: '/archive/' },
+			{ text: 'Submit Article | Tip', link: 'https://github.com/lusaxweb/vuesax-blog' },
 		],
 		logo: '/vuesax-logo-vertical.png',
 		pageSize: 5,
@@ -34,8 +35,8 @@ module.exports = {
 		[
 			'vuepress-plugin-rss',
 			{
-				base_url: '/',
-				site_url: 'https://vuepressblog.org',
+				base_url: '/vuesax-blog/',
+				site_url: 'https://lusaxweb.github.io',
 				filter: frontmatter => frontmatter.date <= new Date(currentDateUTC),
 				count: 20
 			}

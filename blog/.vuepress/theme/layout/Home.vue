@@ -21,6 +21,13 @@
           class="action-button"
           :item="actionLink"
         />
+        <NavLink
+          class="action-button"
+          :item="{
+            link: '/tips/',
+            text: 'Tips'
+          }"
+        />
       </p>
     </div>
 
@@ -107,6 +114,7 @@ export default {
       transition background-color .1s ease
       box-sizing border-box
       border-bottom 1px solid darken($accentColor, 10%)
+      margin 5px
       &:hover
         background-color lighten($accentColor, 10%)
   .features

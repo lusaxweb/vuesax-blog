@@ -14,3 +14,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added the component `Carbon` (ads via carbon)
 - new component `Footerx` added in the layout
 - added the first article of vuesax
+
+## [0.1.1]
+
+### Added
+
+- section tips
+- style fixed responsive
+- menu - pages
+- link - [create Article | tip]
+
+
