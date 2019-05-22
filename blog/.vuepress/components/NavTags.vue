@@ -1,4 +1,4 @@
-<template>
+@@<template>
   <ul class="ul-tags">
     <li
       :class="{'active': selectedTags.length == 0}"
@@ -15,11 +15,25 @@
       @click="emit('Tutorials')" class="tagx not-found">
       Tutorials
     </li>
+    <!-- <li>
+      <button ref="btn" >Prueba</button>
+    </li> -->
   </ul>
+
 </template>
 <script>
 export default {
   props:['selectedTags'],
+  mounted() {
+    var myFunction = function() {
+      console.log('hola', this)
+    }
+
+    // this.$refs.btn.addEventListener('click', myFunction.bind(this))
+    this.$refs.btn.addEventListener('click', function() {
+      console.log('hola', this)
+    }.bind(this))
+  },
   methods: {
     emit(name) {
 
