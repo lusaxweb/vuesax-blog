@@ -15,7 +15,8 @@ module.exports = {
 		editLinks: true,
 		editLinkText: 'Edit this page on GitHub!',
 		nav: [
-			{ text: 'Home', link: '/' },
+			// { text: 'Home', link: '/' },
+			{ text: 'Vuesax', link: 'https://lusaxweb.github.io/vuesax/' },
 			{ text: 'Articles', link: '/articles/' },
 			{ text: 'Tips', link: '/tips/' },
 			{ text: 'Archive', link: '/archive/' },
