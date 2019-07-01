@@ -1,6 +1,6 @@
 ---
 sidebar: auto
-title: Date in more simple times
+title: Data in more simple times
 date: 2019-05-19 14:15:00
 excerpt: Data is a property that we normally use in almost all the components in the past, to simplify further the implementation in our code we can do thanks to the new syntax of es6 and the arrow functions.
 autor: luisDanielRoviraContreras
